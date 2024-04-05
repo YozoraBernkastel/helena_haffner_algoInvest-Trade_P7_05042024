@@ -6,7 +6,14 @@ from itertools import combinations
 
 class BestProfit:
     def __init__(self):
+        self.total_price = 0.0
         self.value = 0.0
+
+    def is_better(self, new_profit: float) -> bool:
+        return new_profit < self.value
+
+    def is_cheaper(self, new_profit: int, total_price: float) -> bool:
+        return new_profit == self.value and total_price < self.total_price
 
 
 def convert_percent_in_euro(price: float, profit: float) -> float:
@@ -41,16 +48,25 @@ def compute_all_combinations(data: dict, r: int, best_profit: BestProfit):
         profit_list = [data[k][1] for k in in_list]
         total_profit = sum(profit_list)
 
-        if total_price <= 500 and total_profit > best_profit.value:
-            print(r)
-            print(f"{best_profit.value = }")
-            best_profit.value = total_profit
+        if total_price > 500 or best_profit.is_better(total_profit):
+            continue
 
-            print(in_list)
-            print(f"{total_price = }")
-            print(f"{profit_list = }")
-            print(f"{total_profit = }")
-            print()
+        print(r)
+        print(f"{best_profit.total_price = }")
+
+        # réfléchir à meilleure vérification
+        if best_profit.is_cheaper(total_profit, total_price) or not best_profit.is_better(total_profit):
+            best_profit.total_price = total_price
+            print(f"new {best_profit.total_price = }")
+
+        print(f"{best_profit.value = }")
+        best_profit.value = total_profit
+
+        print(in_list)
+        print(f"{total_price = }")
+        print(f"{profit_list = }")
+        print(f"{total_profit = }")
+        print()
 
 
 def entry_point():
