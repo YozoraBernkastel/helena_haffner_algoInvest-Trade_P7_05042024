@@ -76,7 +76,7 @@ def entry_point():
     info_best_combination(best_profit)
     end = time.time()
 
-    print(f"\nExecution time -> {end - start}")
+    print(f"\nExecution time  for Brute force alo-> {end - start}")
 
 
 
