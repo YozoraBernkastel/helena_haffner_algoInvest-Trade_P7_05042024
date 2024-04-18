@@ -31,7 +31,7 @@ def format_data(file_path):
     return new_data
 
 
-def entry_point():
+def bruteforce_entry_point():
     start = time.time()
     file_path = "./input/bruteforce_data.csv"
     data = format_data(file_path)
