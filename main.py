@@ -8,8 +8,8 @@ def main():
 
     bruteforce_entry_point()
 
-    optimized_entry_point(first_file_path)
-    optimized_entry_point(second_file_path)
+    optimized_entry_point(first_file_path, "File 1")
+    optimized_entry_point(second_file_path, "File 2")
 
 
 if __name__ == '__main__':
