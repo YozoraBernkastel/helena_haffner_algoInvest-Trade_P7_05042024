@@ -1,7 +1,5 @@
 import time
 from data_helper import read_csv, convert_percent_in_euro
-from best_profit import BestProfit
-from itertools import combinations
 
 
 def opti_format_data(file_path):
@@ -36,10 +34,10 @@ def compare_sequences(ratio_sequence: list, profit_sequence: list) -> None:
 
     best_total = ratio_total if ratio_total[2] > profit_total[2] else profit_total
     best_sequence = ratio_actions if ratio_total[2] > profit_total[2] else profit_actions
+    
     print(f"Pour gagner {best_total[2]}€, dépensez {best_total[1]} Achetez les {best_total[0]} actions :")
     for action in best_sequence:
         print(f"   - {action}")
-
 
 
 def optimized_entry_point(file_path: str) -> None:
