@@ -1,5 +1,5 @@
-from bruteforce import bruteforce_entry_point
-from optimized import optimized_entry_point
+from bruteforce_algo.bruteforce import bruteforce_entry_point
+from optimized_algo.optimized import optimized_entry_point
 
 
 def main():
