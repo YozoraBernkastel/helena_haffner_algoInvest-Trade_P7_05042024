@@ -1,3 +1,7 @@
+from rich.console import Console
+from rich.table import Table
+
+
 class BestProfit:
     def __init__(self):
         self.total_price: float = 0.0
@@ -22,3 +26,18 @@ class BestProfit:
         for action_name in self.actions_sequence:
             this_action_detail = [action_name, data[action_name]]
             self.actions_sequence_detail.append(this_action_detail)
+
+    def display_best_combination(self) -> None:
+        print(f"Achetez les {len(self.actions_sequence)} actions suivantes pour gagner "
+              f"{self.best_profit}€ en dépensant {self.total_price}€ :")
+        table = Table()
+        table.add_column("Action", style="green", no_wrap=True)
+        table.add_column("Prix", style="blue")
+        table.add_column("Profit", style="magenta")
+        for action in self.actions_sequence_detail:
+            table.add_row(f"{action[0]}", f"{action[1][0]}", f"{action[1][1]}")
+
+        table.add_row("Total", f"{self.total_price}", f"{self.best_profit}")
+
+        console = Console()
+        console.print(table)
