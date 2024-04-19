@@ -31,14 +31,7 @@ def compute_sequence(data: list) -> tuple[list, list]:
     return actions, total_profit
 
 
-def compare_sequences(ratio_sequence: list, profit_sequence: list) -> None:
-    ratio_actions, ratio_total = compute_sequence(ratio_sequence)
-    # todo Un excès de prudence ? Ou peut-être tester plus d'angles ?
-    profit_actions, profit_total = compute_sequence(profit_sequence)
-
-    best_total = ratio_total if ratio_total[2] > profit_total[2] else profit_total
-    best_sequence = ratio_actions if ratio_total[2] > profit_total[2] else profit_actions
-
+def display_results(best_sequence : list, best_total: list):
     print(f"Achetez les {best_total[0]} actions suivantes pour gagner {best_total[2]}€ en dépensant {best_total[1]}€ :")
     table = Table()
     table.add_column("Action", style="green", no_wrap=True)
@@ -54,12 +47,34 @@ def compare_sequences(ratio_sequence: list, profit_sequence: list) -> None:
     console.print(table)
 
 
+def compare_sequences(ratio_sequence: list, profit_sequence: list) -> tuple[list, list]:
+    """
+    Ratio total should be better most of the time but, in some case, the better ratio can eliminate the second one when
+    first + second > max_value and second is almost equal to max_value. So, we need to compare the two possibility to
+    fill that hole (as second will be in first position when we sort by raw profit).
+    """
+    ratio_actions, ratio_total = compute_sequence(ratio_sequence)
+    profit_actions, profit_total = compute_sequence(profit_sequence)
+
+    print("À titre informatif :")
+    print(f"   - Tri par ratio -> Nombre d'actions à acheter {ratio_total[0]}; Prix des actions {ratio_total[1]}€"
+          f"; Gain au bout de deux ans {ratio_total[2]}€")
+    print(f"   - Tri par profit brut -> Nombre d'actions à acheter {profit_total[0]}; Prix des actions {profit_total[1]}€"
+          f"; Gain au bout de deux ans {profit_total[2]}€\n")
+
+    best_total = ratio_total if ratio_total[2] > profit_total[2] else profit_total
+    best_sequence = ratio_actions if ratio_total[2] > profit_total[2] else profit_actions
+
+    return best_sequence, best_total
+
+
 def optimized_entry_point(file_path: str, name: str) -> None:
     print(f"############### Optimized {name} ################\n")
     start = time.time()
     ratio_data, profit_data = opti_format_data(file_path)
-    compare_sequences(ratio_data, profit_data)
-
+    best_sequence, best_total = compare_sequences(ratio_data, profit_data)
     end = time.time()
 
-    print(f"\nOptimized Algo execution time -> {end - start}\n")
+    display_results(best_sequence, best_total)
+
+    print(f"\nTemps d'exécution de l'algo optimisé -> {end - start}\n")
