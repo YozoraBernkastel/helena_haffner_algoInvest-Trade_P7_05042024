@@ -2,7 +2,10 @@ import csv
 from os import path
 
 
-def read_csv(file_path):
+MAX_INVEST = 500
+
+
+def read_csv(file_path: str):
     if not path.exists(file_path):
         print("Le fichier n'existe pas")
         return

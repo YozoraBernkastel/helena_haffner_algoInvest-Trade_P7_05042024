@@ -1,11 +1,11 @@
 import time
-from data_helper import read_csv, convert_percent_in_euro
+from helper.data_helper import read_csv, convert_percent_in_euro, MAX_INVEST
 from rich import print
 from rich.console import Console
 from rich.table import Table
 
 
-def opti_format_data(file_path):
+def opti_format_data(file_path: str) -> tuple[list, list]:
     data = read_csv(file_path)
     new_data = {}
     for d in data:
@@ -16,12 +16,12 @@ def opti_format_data(file_path):
             sorted(new_data.items(), key=lambda x: x[1][1], reverse=True))
 
 
-def compute_sequence(data):
+def compute_sequence(data: list) -> tuple[list, list]:
     actions = []
     total_profit = [0, 0.0, 0.0]
 
     for d in data:
-        if total_profit[1] + d[1][0] > 500:
+        if total_profit[1] + d[1][0] > MAX_INVEST:
             continue
         actions.append(d)
         total_profit[0] += 1
