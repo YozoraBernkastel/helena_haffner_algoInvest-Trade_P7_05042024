@@ -26,10 +26,9 @@ def format_data(file_path: str) -> dict[str: list]:
     return new_data
 
 
-def bruteforce_entry_point() -> None:
+def bruteforce_entry_point(file_path: str) -> None:
     print("\n############### Bruteforce ################\n")
     start = time.time()
-    file_path = "./input/bruteforce_data.csv"
     data = format_data(file_path)
     best_profit = BestProfit()
 
@@ -39,4 +38,4 @@ def bruteforce_entry_point() -> None:
     end = time.time()
     best_profit.display_best_combination()
 
-    print(f"\nTemps d'exécution de l'algo brute force -> {end - start}\n")
+    print(f"\nTemps d'exécution de l'algo brute force -> {end - start} secondes.\n")

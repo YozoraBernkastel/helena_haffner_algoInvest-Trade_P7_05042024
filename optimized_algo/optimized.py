@@ -57,10 +57,10 @@ def compare_sequences(ratio_sequence: list, profit_sequence: list) -> tuple[list
     profit_actions, profit_total = compute_sequence(profit_sequence)
 
     print("À titre informatif :")
-    print(f"   - Tri par ratio -> Nombre d'actions à acheter {ratio_total[0]}; Prix des actions {ratio_total[1]}€"
-          f"; Gain au bout de deux ans {ratio_total[2]}€")
-    print(f"   - Tri par profit brut -> Nombre d'actions à acheter {profit_total[0]}; Prix des actions {profit_total[1]}€"
-          f"; Gain au bout de deux ans {profit_total[2]}€\n")
+    print(f"   - Tri par ratio -> Nombre d'actions à acheter {ratio_total[0]}; Prix des actions {ratio_total[1]}€."
+          f"; Gain au bout de deux ans {ratio_total[2]}€.")
+    print(f"   - Tri par profit brut -> Nombre d'actions à acheter {profit_total[0]}; Prix des actions {profit_total[1]}€."
+          f"; Gain au bout de deux ans {profit_total[2]}€.\n")
 
     best_total = ratio_total if ratio_total[2] > profit_total[2] else profit_total
     best_sequence = ratio_actions if ratio_total[2] > profit_total[2] else profit_actions
@@ -77,4 +77,4 @@ def optimized_entry_point(file_path: str, name: str) -> None:
 
     display_results(best_sequence, best_total)
 
-    print(f"\nTemps d'exécution de l'algo optimisé -> {end - start}\n")
+    print(f"\nTemps d'exécution de l'algo optimisé -> {end - start} secondes.\n")
