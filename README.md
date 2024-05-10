@@ -1,10 +1,17 @@
-# helena_haffner_books_online_P2_06102023
+# helena_haffner_books_online_P7_05042024
 
 ## Description du programme
+Ce projet contient:
+ - Un algorithme Bruteforce
+ - Un algorithme Optimisé
+ - Un csv listant 20 actions
+ - Deux csv listant 1000 actions
 
-[//]: # ( todo décrire à quoi sert le programme )
-Pour lancer le programme, allez dans le dossier du projet puis, dans un terminal, utilisez la commande poetry run python3 main.py.
-Pour l'heure, aucune interface ne permet de donner directement au script une URL, il faudra donc aller sur la page main.py et changer l'url des variables ou en l'ajoutant directement comme argument de la fonction scrap_datas(argument).
+Le but de chaque algorithme est de proposer une liste d'actions, dont le prix total ne dépasse pas 500€, dans lesquelles investir.
+
+L'algorithme Bruteforce utilise le module itertools.combinations afin de trouver la meilleure combinaison possible. Toutefois, cette méthode consomme énormément de temps de calcul, temps augmentant de manière exponentielle en fonction du nombre d'éléments présent dans la liste d'actions.
+L'algorithme optimisé ne permet pas d'assurer de trouver la meilleure combinaison mais son temps de calcul est très court et linéaire, de sorte qu'il peut être utilisé sur de très grandes listes d'actions sans que cela ne pose des problèmes de mémoire et de temps. Cet algorithme se fait en deux étapes.
+Tout d'abord, il va privilégier les actions ayant le meilleur ratio prix/profit. Ensuite, dans un second temps, il fait un second calcul, privilgiant le profit brut de chaque action, afin de prévoir les cas où les actions ont des prix élevés et relativement proches de la somme maximale d'investissement.
 
 L'environnement virtuel utilisé pour ce projet est Poetry.
 
