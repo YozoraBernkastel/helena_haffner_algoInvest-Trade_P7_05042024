@@ -1,4 +1,5 @@
 import time
+import tracemalloc
 from helper.data_helper import read_csv, convert_percent_in_euro, MAX_INVEST
 from rich import print
 from rich.console import Console
@@ -32,16 +33,17 @@ def compute_sequence(data: list) -> tuple[list, list]:
 
 
 def display_results(best_sequence : list, best_total: list):
-    print(f"Achetez les {best_total[0]} actions suivantes pour gagner {best_total[2]}€ en dépensant {best_total[1]}€ :")
+    print(f"Achetez les {best_total[0]} actions suivantes pour gagner {round(best_total[2], 2)}€ "
+          f"en dépensant {round(best_total[1], 2)}€ :")
     table = Table()
     table.add_column("Action", style="green", no_wrap=True)
     table.add_column("Prix", style="blue")
     table.add_column("Profit", style="magenta")
 
     for action in best_sequence:
-        table.add_row(action[0], f"{action[1][0]}", f"{action[1][1]}")
+        table.add_row(action[0], f"{round(action[1][0], 2)}", f"{round(action[1][1], 2)}")
 
-    table.add_row("Total", f"{best_total[1]}", f"{best_total[2]}")
+    table.add_row("Total", f"{round(best_total[1], 2)}", f"{round(best_total[2], 2)}")
 
     console = Console()
     console.print(table)
@@ -57,10 +59,10 @@ def compare_sequences(ratio_sequence: list, profit_sequence: list) -> tuple[list
     profit_actions, profit_total = compute_sequence(profit_sequence)
 
     print("À titre informatif :")
-    print(f"   - Tri par ratio -> Nombre d'actions à acheter {ratio_total[0]}; Prix des actions {ratio_total[1]}€."
-          f"; Gain au bout de deux ans {ratio_total[2]}€.")
-    print(f"   - Tri par profit brut -> Nombre d'actions à acheter {profit_total[0]}; Prix des actions {profit_total[1]}€."
-          f"; Gain au bout de deux ans {profit_total[2]}€.\n")
+    print(f"   - Tri par ratio -> Nombre d'actions à acheter {ratio_total[0]}; Prix des actions {round(ratio_total[1], 2)}€."
+          f"; Gain au bout de deux ans {round(ratio_total[2], 2)}€.")
+    print(f"   - Tri par profit brut -> Nombre d'actions à acheter {profit_total[0]}; Prix des actions {round(profit_total[1], 2)}€."
+          f"; Gain au bout de deux ans {round(profit_total[2], 2)}€.\n")
 
     best_total = ratio_total if ratio_total[2] > profit_total[2] else profit_total
     best_sequence = ratio_actions if ratio_total[2] > profit_total[2] else profit_actions
@@ -71,8 +73,13 @@ def compare_sequences(ratio_sequence: list, profit_sequence: list) -> tuple[list
 def optimized_entry_point(file_path: str, name: str) -> None:
     print(f"############### Optimized {name} ################\n")
     start = time.time()
+    # tracemalloc.start()
     ratio_data, profit_data = opti_format_data(file_path)
     best_sequence, best_total = compare_sequences(ratio_data, profit_data)
+    # current, peak = tracemalloc.get_traced_memory()
+    # print(
+    #     f"Current memory usage is {current / 10 ** 3}KB; Peak was {peak / 10 ** 3}KB; Diff = {(peak - current) / 10 ** 3}KB")
+    # tracemalloc.stop()
     end = time.time()
 
     display_results(best_sequence, best_total)

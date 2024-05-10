@@ -29,15 +29,15 @@ class BestProfit:
 
     def display_best_combination(self) -> None:
         print(f"Achetez les {len(self.actions_sequence)} actions suivantes pour gagner "
-              f"{self.best_profit}€ en dépensant {self.total_price}€ :")
+              f"{round(self.best_profit, 2)}€ en dépensant {round(self.total_price, 2)}€ :")
         table = Table()
         table.add_column("Action", style="green", no_wrap=True)
         table.add_column("Prix", style="blue")
         table.add_column("Profit", style="magenta")
         for action in self.actions_sequence_detail:
-            table.add_row(f"{action[0]}", f"{action[1][0]}", f"{action[1][1]}")
+            table.add_row(f"{action[0]}", f"{round(action[1][0], 2)}", f"{round(action[1][1], 2)}")
 
-        table.add_row("Total", f"{self.total_price}", f"{self.best_profit}")
+        table.add_row("Total", f"{round(self.total_price)}", f"{round(self.best_profit, 2)}")
 
         console = Console()
         console.print(table)
