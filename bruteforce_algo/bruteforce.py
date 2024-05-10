@@ -1,4 +1,5 @@
 import time
+import tracemalloc
 from itertools import combinations
 from helper.data_helper import read_csv, convert_percent_in_euro, MAX_INVEST
 from bruteforce_algo.best_profit import BestProfit
@@ -21,7 +22,7 @@ def compute_all_combinations(data: dict, r: int, best_profit: BestProfit) -> Non
 
 def format_data(file_path: str) -> dict[str: list]:
     data = read_csv(file_path)
-    new_data = {d[0]: [d[1], convert_percent_in_euro(float(d[1]), float(d[2]))] for d in data}
+    new_data = {d[0]: [float(d[1]), convert_percent_in_euro(float(d[1]), float(d[2]))] for d in data}
 
     return new_data
 
@@ -29,13 +30,19 @@ def format_data(file_path: str) -> dict[str: list]:
 def bruteforce_entry_point(file_path: str) -> None:
     print("\n############### Bruteforce ################\n")
     start = time.time()
+    # tracemalloc.start()
     data = format_data(file_path)
     best_profit = BestProfit()
 
     for r in range(1, len(data) + 1):
         compute_all_combinations(data, r, best_profit)
     best_profit.get_actions_info(data)
+    # current, peak = tracemalloc.get_traced_memory()
+    # print(
+    #     f"Current memory usage is {current / 10 ** 3}KB; Peak was {peak / 10 ** 3}KB; Diff = {(peak - current) / 10 ** 3}KB")
+    # tracemalloc.stop()
     end = time.time()
     best_profit.display_best_combination()
 
     print(f"\nTemps d'exécution de l'algo brute force -> {end - start} secondes.\n")
+
